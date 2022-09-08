@@ -1,0 +1,50 @@
+<reactiveUi:ReactiveUserControl x:TypeArguments="vm:SettingsViewModel" xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:vm="clr-namespace:DesktopApp.ViewModels"
+                                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                                x:Class="DesktopApp.Views.SettingsView">
+
+    <Design.DataContext>
+        <vm:SettingsViewModel/>
+    </Design.DataContext>
+    
+  <DockPanel>
+    <Grid DockPanel.Dock="Left" RowDefinitions="*,auto" ColumnDefinitions="auto" Margin="4">
+      <ListBox Grid.Row="0" Grid.Column="0" Name="ConnectionListBox" Items="{Binding Connections}" MinWidth="200">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Name}"/>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Margin="4 0" Command="{Binding RemoveConnection}" CommandParameter="{Binding #ConnectionListBox.SelectedIndex}" IsEnabled="{Binding #ConnectionListBox.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}"/>
+        <Button Margin="4" Command="{Binding AddConnection}" />
+      </StackPanel>
+    </Grid>
+
+    <Grid DockPanel.Dock="Top" RowDefinitions="auto,auto,auto,auto,auto,*,auto" ColumnDefinitions="auto,*" Margin="4" IsVisible="{Binding #ConnectionListBox.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,5,5,0" Text="Name:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+      <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding Name}" />
+
+      <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,5,5,0" Text="Address:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+      <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding ServerIpAddress}" />
+
+      <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,5,5,0" Text="Port:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+      <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding ServerPort}" />
+
+      <TextBlock Grid.Row="3" Grid.Column="0" Margin="5,5,5,0" Text="User:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+      <TextBox Grid.Row="3" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding DatabaseUser}" />
+
+      <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,5,5,0" Text="Password:" HorizontalAlignment="Right" VerticalAlignment="Center" />
+      <TextBox Grid.Row="4" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding DatabasePassword}" />
+      
+      <Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" Margin="5" RowDefinitions="Auto" ColumnDefinitions="*,auto">
+        <Button Grid.Row="0" Grid.Column="1" Content="OK" />
+      </Grid>
+    </Grid>
+  </DockPanel>
+</reactiveUi:ReactiveUserControl>
