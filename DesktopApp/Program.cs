@@ -1,6 +1,7 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.ReactiveUI;
+using DesktopApp.Extensions;
 using DesktopApp.Models;
 using DesktopApp.Services;
 using Serilog;
@@ -43,7 +44,12 @@ namespace DesktopApp
 
         private static void RegisterDependencies()
         {
+            // set up dependencies for settings
+            Locator.CurrentMutable.RegisterConstant(new Settings());
             Locator.CurrentMutable.Register<ISettingsService>(() => new FileSettingsService());
+            
+            // load settings
+            Locator.Current.GetRequiredService<ISettingsService>().Load();
         }
     }
 }

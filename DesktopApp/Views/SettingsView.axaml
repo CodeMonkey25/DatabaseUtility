@@ -5,7 +5,8 @@
                                 xmlns:reactiveUi="http://reactiveui.net"
                                 xmlns:vm="clr-namespace:DesktopApp.ViewModels"
                                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                                x:Class="DesktopApp.Views.SettingsView">
+                                x:Class="DesktopApp.Views.SettingsView"
+                                Initialized="SettingsView_OnInitialized">
 
     <Design.DataContext>
         <vm:SettingsViewModel/>
@@ -21,8 +22,12 @@
         </ListBox.ItemTemplate>
       </ListBox>
       <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
-        <Button Margin="4 0" Command="{Binding RemoveConnection}" CommandParameter="{Binding #ConnectionListBox.SelectedIndex}" IsEnabled="{Binding #ConnectionListBox.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}"/>
-        <Button Margin="4" Command="{Binding AddConnection}" />
+        <Button Margin="4 0" Command="{Binding RemoveConnection}" CommandParameter="{Binding #ConnectionListBox.SelectedItem}" IsEnabled="{Binding #ConnectionListBox.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+          <Image Source="{SvgImage /Assets/circle-minus-solid.svg}" Width="15" Height="15" />
+        </Button>
+        <Button Margin="4" Command="{Binding AddConnection}">
+          <Image Source="{SvgImage /Assets/circle-plus-solid.svg}" Width="15" Height="15" />
+        </Button>
       </StackPanel>
     </Grid>
 
@@ -31,7 +36,7 @@
       <TextBox Grid.Row="0" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding Name}" />
 
       <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,5,5,0" Text="Address:" HorizontalAlignment="Right" VerticalAlignment="Center" />
-      <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding ServerIpAddress}" />
+      <TextBox Grid.Row="1" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding ServerAddress}" />
 
       <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,5,5,0" Text="Port:" HorizontalAlignment="Right" VerticalAlignment="Center" />
       <TextBox Grid.Row="2" Grid.Column="1" Margin="0,5,5,0" DataContext="{Binding #ConnectionListBox.SelectedItem}" Text="{Binding ServerPort}" />

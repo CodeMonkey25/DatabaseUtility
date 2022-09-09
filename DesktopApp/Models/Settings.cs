@@ -1,10 +1,12 @@
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.Serialization;
+using DynamicData.Binding;
 using ReactiveUI;
 
 namespace DesktopApp.Models
 {
+    [DataContract]
     public class Settings : ReactiveObject
     {
         // Environment.SpecialFolder.CommonApplicationData => C:\ProgramData
@@ -16,8 +18,8 @@ namespace DesktopApp.Models
         internal static string DataPath => Path.Combine(JmsDataPath, "DatabaseUtility");
         internal static string LogFile => Path.Combine(DataPath, "Logs", "daily_.log");
 
-        private ObservableCollection<Connection> _connections = new();
-        public ObservableCollection<Connection> Connections
+        private ObservableCollectionExtended<Connection> _connections = new();
+        [DataMember] public ObservableCollectionExtended<Connection> Connections
         {
             get => _connections;
             set => this.RaiseAndSetIfChanged(ref _connections, value);

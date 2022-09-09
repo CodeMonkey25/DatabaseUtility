@@ -1,10 +1,13 @@
-using DesktopApp.Models;
+using System;
 
 namespace DesktopApp.Services
 {
     public interface ISettingsService
     {
-        public Settings Load();
-        public void Save(Settings settings);
+        public void Load();
+        public void Save();
+
+        public void AddConnection();
+        public void RemoveConnection(Guid id);
     }
 }

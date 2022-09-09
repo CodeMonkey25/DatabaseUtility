@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using DesktopApp.Extensions;
 using DesktopApp.Models;
 using DesktopApp.Services;
 using DynamicData;
@@ -31,16 +32,15 @@ namespace DesktopApp.ViewModels
 
         public SettingsViewModel()
         {
-            ISettingsService settingsService = Locator.Current.GetService<ISettingsService>() ?? throw new Exception("unable to load ISettingsService");
-            Settings = settingsService.Load();
-            Connections = new ReadOnlyObservableCollection<Connection>(Settings.Connections);
+            _settings = Settings = Locator.Current.GetRequiredService<Settings>();
+            _connections = Connections = new ReadOnlyObservableCollection<Connection>(Settings.Connections);
             
-            this.WhenActivated((CompositeDisposable disposables) =>
+            this.WhenActivated(disposables =>
                 {
                     Connections.ToObservableChangeSet()
                         .AutoRefresh()
                         .Throttle(TimeSpan.FromSeconds(1))
-                        .Subscribe(_ => this.Save(), e => this.Log().Error(e))
+                        .Subscribe(_ => this.Save(), this.Log().Error)
                         .DisposeWith(disposables);
                 }
             );
@@ -48,29 +48,20 @@ namespace DesktopApp.ViewModels
         
         internal void AddConnection()
         {
-            this.Log().Info("adding new connection");
-
-            int i = 0;
-            string name;
-            do
-            {
-                name = $"New Connection {++i}";
-            } while (Settings.Connections.Any(cs => String.Equals(cs.Name, name, StringComparison.CurrentCultureIgnoreCase)));
-
-            Settings.Connections.Add(new Connection() { Name = name, ServerPort = 3306 });
+            ISettingsService settingsService = Locator.Current.GetRequiredService<ISettingsService>();
+            settingsService.AddConnection();
         }
 
-        internal void RemoveConnection(int index)
+        internal void RemoveConnection(Connection connection)
         {
-            this.Log().Info($"removing existing connection {index}");
-            Settings.Connections.RemoveAt(index);
+            ISettingsService settingsService = Locator.Current.GetRequiredService<ISettingsService>();
+            settingsService.RemoveConnection(connection.Id);
         }
-        
-        internal void Save()
+
+        private void Save()
         {
-            this.Log().Info("saving settings");
-            ISettingsService settingsService = Locator.Current.GetService<ISettingsService>() ?? throw new Exception("unable to load ISettingsService");
-            settingsService.Save(Settings);
+            ISettingsService settingsService = Locator.Current.GetRequiredService<ISettingsService>();
+            settingsService.Save();
         }
     }
 }
