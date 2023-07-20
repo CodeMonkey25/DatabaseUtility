@@ -24,7 +24,7 @@ namespace DesktopApp.ViewModels
             init => this.RaiseAndSetIfChanged(ref _settings, value);
         }
 
-        internal ReadOnlyObservableCollection<Connection> Connections
+        public ReadOnlyObservableCollection<Connection> Connections
         {
             get => _connections;
             private init => this.RaiseAndSetIfChanged(ref _connections, value);

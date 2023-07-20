@@ -14,7 +14,7 @@
     
   <DockPanel>
     <Grid DockPanel.Dock="Left" RowDefinitions="*,auto" ColumnDefinitions="auto" Margin="4">
-      <ListBox Grid.Row="0" Grid.Column="0" Name="ConnectionListBox" Items="{Binding Connections}" MinWidth="200">
+      <ListBox Grid.Row="0" Grid.Column="0" Name="ConnectionListBox" ItemsSource="{Binding Connections}" MinWidth="200">
         <ListBox.ItemTemplate>
           <DataTemplate>
             <TextBlock Text="{Binding Name}"/>

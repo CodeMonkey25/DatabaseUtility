@@ -13,11 +13,10 @@ namespace DesktopApp.Views
 {
     public partial class SettingsView : ReactiveUserControl<SettingsViewModel>
     {
-        private ListBox ConnectionListBox => this.FindControl<ListBox>("ConnectionListBox");
-
         public SettingsView()
         {
             InitializeComponent();
+            ConnectionListBox = this.FindControl<ListBox>("ConnectionListBox");
         }
 
         private void InitializeComponent()
