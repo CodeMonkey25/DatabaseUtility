@@ -10,13 +10,13 @@
         x:Class="DatabaseUtility.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="MaterialDB"
+        Title="DatabaseUtility"
         Width="800" Height="450">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
-    
+
     <dialogHostAvalonia:DialogHost CloseOnClickAway="True">
         <dialogHostAvalonia:DialogHost.DialogContent />
         <controls:SnackbarHost HostName="Root" TemplateApplied="TemplatedControl_OnTemplateApplied">
@@ -37,38 +37,37 @@
                 <DockPanel LastChildFill="true">
                     <controls:ColorZone VerticalAlignment="Top" HorizontalAlignment="Stretch" DockPanel.Dock="Top" Height="56" Mode="PrimaryMid" ZIndex="1">
                         <Grid Margin="16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="24" />
-                            <ColumnDefinition Width="32" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="32" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ToggleButton Name="NavDrawerSwitch" Foreground="{DynamicResource MaterialDesignBody}" Width="32" Height="32" Padding="4">
-                            <avalonia:MaterialIcon Kind="Menu" Width="24" Height="24" />
-                        </ToggleButton>
-                        <TextBlock Grid.Column="2" Text="MaterialDB"
-                                   VerticalAlignment="Center" />
-                        <Menu Grid.Column="4" Height="32" Padding="0" Margin="0">
-                            <MenuItem Height="32" Width="32" Header="{avalonia:MaterialIconExt DotsVertical, Size=24}">
-                                <MenuItem Header="Hello!" Click="HelloButtonMenuItem_OnClick">
-                                    <MenuItem.Icon>
-                                        <avalonia:MaterialIcon Kind="Hand" Width="24" Height="24" />
-                                    </MenuItem.Icon>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="32" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="32" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Name="NavDrawerSwitch" Foreground="{DynamicResource MaterialDesignBody}" Width="32" Height="32" Padding="4">
+                                <avalonia:MaterialIcon Kind="Menu" Width="24" Height="24" />
+                            </ToggleButton>
+                            <TextBlock Grid.Column="2" Text="DatabaseUtility" VerticalAlignment="Center" />
+                            <Menu Grid.Column="4" Height="32" Padding="0" Margin="0">
+                                <MenuItem Height="32" Width="32" Header="{avalonia:MaterialIconExt DotsVertical, Size=24}">
+                                    <MenuItem Header="Hello!" Click="HelloButtonMenuItem_OnClick">
+                                        <MenuItem.Icon>
+                                            <avalonia:MaterialIcon Kind="Hand" Width="24" Height="24" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="Action 1" />
+                                    <MenuItem Header="Action 2" />
+                                    <MenuItem Header="Action 3" />
+                                    <Separator />
+                                    <MenuItem Header="Goodbye" Click="GoodbyeButtonMenuItem_OnClick">
+                                        <MenuItem.Icon>
+                                            <avalonia:MaterialIcon Kind="ExitRun" Width="24" Height="24" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </MenuItem>
-                                <Separator />
-                                <MenuItem Header="Action 1" />
-                                <MenuItem Header="Action 2" />
-                                <MenuItem Header="Action 3" />
-                                <Separator />
-                                <MenuItem Header="Goodbye" Click="GoodbyeButtonMenuItem_OnClick">
-                                    <MenuItem.Icon>
-                                        <avalonia:MaterialIcon Kind="ExitRun" Width="24" Height="24" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </MenuItem>
-                        </Menu>
-                    </Grid>
+                            </Menu>
+                        </Grid>
                     </controls:ColorZone>
                     <TransitioningContentControl DockPanel.Dock="Top" Content="{Binding MySubViewModel}">
                         <TransitioningContentControl.PageTransition>

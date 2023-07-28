@@ -23,7 +23,7 @@ public partial class MainWindow : Window
 
     private void TemplatedControl_OnTemplateApplied(object? sender, TemplateAppliedEventArgs e)
     {
-        SnackbarHost.Post("Welcome to MaterialDB!", null, DispatcherPriority.Normal);
+        SnackbarHost.Post("Welcome to DatabaseUtility!", null, DispatcherPriority.Normal);
     }
 
     private void HelloButtonMenuItem_OnClick(object? sender, RoutedEventArgs e)
@@ -62,5 +62,6 @@ public partial class MainWindow : Window
                 listBox.SelectedIndex = 0;
                 break;
         }
+        NavDrawerSwitch.IsChecked = false;
     }
 }
