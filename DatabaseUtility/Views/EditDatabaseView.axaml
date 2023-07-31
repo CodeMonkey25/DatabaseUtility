@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:DatabaseUtility.ViewModels"
              xmlns:assists="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+             xmlns:views="clr-namespace:DatabaseUtility.Views"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="325"
              x:Class="DatabaseUtility.Views.EditDatabaseView"
              x:DataType="viewModels:EditDatabaseViewModel"
@@ -14,6 +15,6 @@
         <TextBox assists:TextFieldAssist.Label="Server" Text="{Binding WorkingDatabaseConnection.Server}" Margin="5" />
         <TextBox assists:TextFieldAssist.Label="Username" Text="{Binding WorkingDatabaseConnection.UserName}" Margin="5" />
         <TextBox assists:TextFieldAssist.Label="Password" Text="{Binding WorkingDatabaseConnection.Password}" Classes="revealPasswordButton" PasswordChar="*" Margin="5" />
-        <Button Name="Save" Content="Save" Margin="5" Click="SaveButton_OnClick" />
+        <Button Name="Save" Content="Save" Margin="5" Command="{Binding $parent[views:EditDatabaseView].SaveCommand}" />
     </StackPanel>
 </UserControl>

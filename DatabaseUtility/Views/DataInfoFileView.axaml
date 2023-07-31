@@ -7,10 +7,10 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DatabaseUtility.Views.DataInfoFileView"
              x:DataType="viewModels:DataInfoFileViewModel">
-    <StackPanel Orientation="Vertical" Margin="5">
-        <TextBox assists:TextFieldAssist.Label="DataInfo File" Text="{Binding DataInfoFilePath}" Margin="5" />
+    <Grid ColumnDefinitions="*" RowDefinitions="Auto,Auto,Auto,*,Auto" Margin="5">
+        <TextBox Grid.Row="0" Name="DataInfoFileTextBox" assists:TextFieldAssist.Label="DataInfo File" Text="{Binding DataInfoFilePath}" Margin="5" />
         
-        <ComboBox assists:ComboBoxAssist.Label="Select a Database Connection" ItemsSource="{Binding DatabaseConnections}" SelectedItem="{Binding SelectedDatabaseConnection}" Margin="5">
+        <ComboBox Grid.Row="1" assists:ComboBoxAssist.Label="Select a Database Connection" ItemsSource="{Binding DatabaseConnections}" SelectedItem="{Binding SelectedDatabaseConnection}" Margin="5">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -18,7 +18,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         
-        <ComboBox assists:ComboBoxAssist.Label="Select a Database Name" ItemsSource="{Binding DatabaseNames}" SelectedItem="{Binding SelectedDatabaseName}" Margin="5">
+        <ComboBox Grid.Row="2" assists:ComboBoxAssist.Label="Select a Database Name" ItemsSource="{Binding DatabaseNames}" SelectedItem="{Binding SelectedDatabaseName}" Margin="5">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -26,14 +26,14 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Border BorderBrush="White" BorderThickness="1" Margin="5">
-            <StackPanel Orientation="Vertical" Margin="5">
-                <TextBox assists:TextFieldAssist.Label="Database Name Filter" Text="{Binding DatabaseNameFilter}" Margin="5" TextAlignment="Center" />
-                <ToggleSwitch Name="ChkShowOnlyRm12Databases" Content="Show only RM12 databases" IsChecked="{Binding ShowOnlyRM12Databases}" Margin="5" />
-                <ToggleSwitch Content="Show only default locations" IsChecked="{Binding ShowOnlyDefaultLocations}" IsEnabled="{Binding #ChkShowOnlyRm12Databases.IsChecked}" Margin="5" />
-            </StackPanel>
+        <Border Grid.Row="3" BorderBrush="{Binding #DataInfoFileTextBox.Foreground}" BorderThickness="1" Margin="5">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" Margin="5">
+                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" assists:TextFieldAssist.Label="Database Name Filter" Text="{Binding DatabaseNameFilter}" Margin="5" TextAlignment="Center" />
+                <ToggleSwitch Grid.Row="1" Grid.Column="0" Name="ChkShowOnlyRm12Databases" Content="Show only RM12 databases" IsChecked="{Binding ShowOnlyRM12Databases}" Margin="5" />
+                <ToggleSwitch Grid.Row="1" Grid.Column="1" Content="Show only default locations" IsChecked="{Binding ShowOnlyDefaultLocations}" IsEnabled="{Binding #ChkShowOnlyRm12Databases.IsChecked}" Margin="5" />
+            </Grid>
         </Border>
         
-        <Button Name="UpdateButton" Content="Update" Margin="5" Command="{Binding UpdateDataInfoCommand}" />
-    </StackPanel>
+        <Button Grid.Row="4" Name="UpdateButton" Content="Update" Margin="5" Command="{Binding UpdateDataInfoCommand}" />
+    </Grid>
 </UserControl>
