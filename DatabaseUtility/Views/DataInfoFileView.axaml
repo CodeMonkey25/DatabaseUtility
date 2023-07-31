@@ -17,9 +17,6 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-
-        <ToggleSwitch Name="ChkShowOnlyRm12Databases" Content="Show only RM12 databases" IsChecked="{Binding ShowOnlyRM12Databases}" Margin="5" />
-        <ToggleSwitch Content="Show only default locations" IsChecked="{Binding ShowOnlyDefaultLocations}" IsEnabled="{Binding #ChkShowOnlyRm12Databases.IsChecked}" Margin="5" />
         
         <ComboBox assists:ComboBoxAssist.Label="Select a Database Name" ItemsSource="{Binding DatabaseNames}" SelectedItem="{Binding SelectedDatabaseName}" Margin="5">
             <ComboBox.ItemTemplate>
@@ -28,6 +25,14 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+
+        <Border BorderBrush="White" BorderThickness="1" Margin="5">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <TextBox assists:TextFieldAssist.Label="Database Name Filter" Text="{Binding DatabaseNameFilter}" Margin="5" TextAlignment="Center" />
+                <ToggleSwitch Name="ChkShowOnlyRm12Databases" Content="Show only RM12 databases" IsChecked="{Binding ShowOnlyRM12Databases}" Margin="5" />
+                <ToggleSwitch Content="Show only default locations" IsChecked="{Binding ShowOnlyDefaultLocations}" IsEnabled="{Binding #ChkShowOnlyRm12Databases.IsChecked}" Margin="5" />
+            </StackPanel>
+        </Border>
         
         <Button Name="UpdateButton" Content="Update" Margin="5" Command="{Binding UpdateDataInfoCommand}" />
     </StackPanel>

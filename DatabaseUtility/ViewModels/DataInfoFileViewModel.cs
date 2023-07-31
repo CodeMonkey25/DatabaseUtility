@@ -26,6 +26,7 @@ public class DataInfoFileViewModel : ViewModelBase
     private string? _selectedDatabaseName;
     private bool _showOnlyRM12Databases = true;
     private bool _showOnlyDefaultLocations = true;
+    private string _databaseNameFilter = "jsarley";
 
     public string DataInfoFilePath
     {
@@ -68,6 +69,12 @@ public class DataInfoFileViewModel : ViewModelBase
         get => _showOnlyDefaultLocations;
         set => this.RaiseAndSetIfChanged(ref _showOnlyDefaultLocations, value);
     }
+
+    public string DatabaseNameFilter
+    {
+        get => _databaseNameFilter;
+        set => this.RaiseAndSetIfChanged(ref _databaseNameFilter, value);
+    }
     
     public ICommand UpdateDataInfoCommand { get; }
 
@@ -76,9 +83,14 @@ public class DataInfoFileViewModel : ViewModelBase
         IDatabaseService databaseService = Locator.Current.GetRequiredService<IDatabaseService>();
         IEnumerable<DatabaseConnection> dbs = databaseService.GetDatabases();
         DatabaseConnections = new(dbs);
-        
-        this.WhenAnyValue(x => x.SelectedDatabaseConnection, x=>x.ShowOnlyRM12Databases, x=>x.ShowOnlyDefaultLocations)
-            .Subscribe(t => LoadDatabases(t.Item1, t.Item2, t.Item3));
+
+        this.WhenAnyValue(
+                x => x.SelectedDatabaseConnection, 
+                x => x.ShowOnlyRM12Databases,
+                x => x.ShowOnlyDefaultLocations, 
+                x => x.DatabaseNameFilter
+            )
+            .Subscribe(t => LoadDatabases(t.Item1, t.Item2, t.Item3, t.Item4));
 
         UpdateDataInfoCommand = ReactiveCommand.Create(
             UpdateDataInfo,
@@ -86,7 +98,7 @@ public class DataInfoFileViewModel : ViewModelBase
         );
     }
     
-    private void LoadDatabases(DatabaseConnection? connection, bool showOnlyRM12Databases, bool showOnlyDefaultLocations)
+    private void LoadDatabases(DatabaseConnection? connection, bool showOnlyRM12Databases, bool showOnlyDefaultLocations, string databaseNameFilter)
     {
         DatabaseNames.Clear();
         SelectedDatabaseName = null;
@@ -107,6 +119,11 @@ public class DataInfoFileViewModel : ViewModelBase
                 conn.Open();
                 const string sql = "SELECT SCHEMA_NAME FROM information_schema.schemata WHERE `SCHEMA_NAME` NOT IN ('information_schema', 'mysql', 'performance_schema', 'sys') ORDER BY `SCHEMA_NAME`";
                 databases = conn.Query<string>(sql);
+            }
+
+            if (!string.IsNullOrEmpty(databaseNameFilter))
+            {
+                databases = databases.Where(name => name.Contains(databaseNameFilter, StringComparison.CurrentCultureIgnoreCase));
             }
 
             if (showOnlyRM12Databases)
