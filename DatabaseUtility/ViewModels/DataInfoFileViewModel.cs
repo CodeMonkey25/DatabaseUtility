@@ -91,11 +91,13 @@ public class DataInfoFileViewModel : ViewModelBase
                 x => x.DatabaseNameFilter
             )
             .Subscribe(t => LoadDatabases(t.Item1, t.Item2, t.Item3, t.Item4));
-
+        
         UpdateDataInfoCommand = ReactiveCommand.Create(
             UpdateDataInfo,
             this.WhenAnyValue(x => x.SelectedDatabaseName).Select(x => x != null)
         );
+
+        LoadDataInfo();
     }
     
     private void LoadDatabases(DatabaseConnection? connection, bool showOnlyRM12Databases, bool showOnlyDefaultLocations, string databaseNameFilter)
@@ -143,6 +145,42 @@ public class DataInfoFileViewModel : ViewModelBase
         }
     }
 
+    private void LoadDataInfo()
+    {
+        try
+        {
+            string server = string.Empty;
+            string db = string.Empty;
+            
+            // load from file
+            foreach (string line in File.ReadLines(DataInfoFilePath))
+            {
+                if (line.StartsWith("database="))
+                {
+                    db = line.Split("=")[1].Trim();
+                }
+                else if (line.StartsWith("server="))
+                {
+                    server = line.Split("=")[1].Trim();
+                }
+            }
+            
+            // validate data loaded
+            if (string.IsNullOrEmpty(server)) throw new Exception("Unable to locate server record.");
+            if (string.IsNullOrEmpty(db)) throw new Exception("Unable to locate database record.");
+            
+            // select server record
+            SelectedDatabaseConnection = DatabaseConnections.FirstOrDefault(c => c.Server.Equals(server, StringComparison.InvariantCultureIgnoreCase));
+            
+            // select db record
+            SelectedDatabaseName = DatabaseNames.FirstOrDefault(n => n.Equals($"{db}_rm12", StringComparison.InvariantCultureIgnoreCase));
+        }
+        catch (Exception e)
+        {
+            this.Log().Error(e, "Unable to load datainfo file");
+        }
+    }
+    
     private void UpdateDataInfo()
     {
         if (SelectedDatabaseConnection == null) return;
