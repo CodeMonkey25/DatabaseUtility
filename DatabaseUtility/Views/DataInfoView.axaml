@@ -1,0 +1,30 @@
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:DataInfoViewModel" 
+                                xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:viewModels="clr-namespace:DatabaseUtility.ViewModels"
+                                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                                x:Class="DatabaseUtility.Views.DataInfoView"
+                                x:DataType="viewModels:DataInfoViewModel">
+    
+    <Design.DataContext>
+        <viewModels:DataInfoViewModel/>
+    </Design.DataContext>
+
+    <Border Padding="20">
+        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto,*,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="DataInfo File:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Name="DataInfoFileTextBox" Text="{Binding DataInfoFilePath}" Margin="5" />
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Select a Database Connection:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding DatabaseServers}" SelectedItem="{Binding SelectedDatabaseServer}" Margin="5" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Select a Database Name:" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding DatabaseNames}" SelectedItem="{Binding SelectedDatabaseName}" Margin="5" />
+
+            <Button Grid.Row="4" Grid.Column="2" Name="UpdateButton" Content="Update" Margin="5" Command="{Binding UpdateDataInfoCommand}" />
+        </Grid>
+    </Border>
+</reactiveUi:ReactiveUserControl>

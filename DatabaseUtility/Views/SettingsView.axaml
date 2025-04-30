@@ -1,0 +1,34 @@
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="viewModels:SettingsViewModel" 
+                                xmlns="https://github.com/avaloniaui"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:viewModels="clr-namespace:DatabaseUtility.ViewModels"
+                                mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                                x:Class="DatabaseUtility.Views.SettingsView"
+                                x:DataType="viewModels:SettingsViewModel">
+
+    <Design.DataContext>
+        <viewModels:SettingsViewModel/>
+    </Design.DataContext>
+    
+    <Border Padding="20">
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Database Name Filter:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding DatabaseNameFilter}" />
+            
+            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyRM12Databases}">
+                Show Only RM12 Databases
+            </CheckBox>
+            
+            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyDefaultLocations}">
+                Show Only Default Locations
+            </CheckBox>
+            
+            <Button Grid.Row="4" Grid.Column="2" Command="{Binding CancelCommand}">Cancel</Button>
+
+            <Button Grid.Row="4" Grid.Column="3" Command="{Binding SaveCommand}">Save</Button>
+        </Grid>
+    </Border>
+</reactiveUi:ReactiveUserControl>

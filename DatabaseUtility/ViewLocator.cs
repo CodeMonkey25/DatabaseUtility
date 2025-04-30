@@ -7,10 +7,13 @@ namespace DatabaseUtility;
 
 public class ViewLocator : IDataTemplate
 {
-    public Control Build(object? data)
+    public Control? Build(object? param)
     {
-        string? name = data?.GetType().FullName!.Replace("ViewModel", "View");
-        Type? type = Type.GetType(name ?? string.Empty);
+        if (param is null)
+            return null;
+
+        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
+        var type = Type.GetType(name);
 
         if (type != null)
         {

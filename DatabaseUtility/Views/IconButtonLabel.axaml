@@ -1,0 +1,21 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:DatabaseUtility.Views"
+        x:DataType="controls:IconButtonLabel">
+    <Design.PreviewWith>
+        <controls:IconButtonLabel IconUnicode="&#xE2C2;" LabelText="Home" />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|IconButtonLabel">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Button DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:IconButtonLabel}}}" Command="{Binding Command}" HorizontalAlignment="{Binding MyHorizontalAlignment}" >
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontFamily="{DynamicResource PhosphorFill}" Content="{Binding IconUnicode}" />
+                        <Label Content="{Binding LabelText}" IsVisible="{Binding LabelIsVisible}" />
+                    </StackPanel>
+                </Button>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

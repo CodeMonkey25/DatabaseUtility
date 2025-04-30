@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseUtility", "DatabaseUtility\DatabaseUtility.csproj", "{774DC342-8CF6-4333-BD57-BF24A5F73A90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseUtility", "DatabaseUtility\DatabaseUtility.csproj", "{100E5899-FC30-47F5-B392-95EE4CDA2D3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseUtility.Tests", "DatabaseUtility.Tests\DatabaseUtility.Tests.csproj", "{C094A98D-8B9C-4984-B927-AC4E25C9B14A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{774DC342-8CF6-4333-BD57-BF24A5F73A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{774DC342-8CF6-4333-BD57-BF24A5F73A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{774DC342-8CF6-4333-BD57-BF24A5F73A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{774DC342-8CF6-4333-BD57-BF24A5F73A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100E5899-FC30-47F5-B392-95EE4CDA2D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100E5899-FC30-47F5-B392-95EE4CDA2D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100E5899-FC30-47F5-B392-95EE4CDA2D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100E5899-FC30-47F5-B392-95EE4CDA2D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C094A98D-8B9C-4984-B927-AC4E25C9B14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C094A98D-8B9C-4984-B927-AC4E25C9B14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C094A98D-8B9C-4984-B927-AC4E25C9B14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C094A98D-8B9C-4984-B927-AC4E25C9B14A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

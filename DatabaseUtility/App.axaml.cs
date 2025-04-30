@@ -1,24 +1,17 @@
-using System;
-using System.IO;
+using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using DatabaseUtility.ViewModels;
+using DatabaseUtility.Utility;
 using DatabaseUtility.Views;
+using Splat;
+
+[assembly:InternalsVisibleTo("DatabaseUtility.Tests")]
 
 namespace DatabaseUtility;
 
-public partial class App : Application
+public class App : Application
 {
-    // Environment.SpecialFolder.CommonApplicationData => C:\ProgramData
-    // Environment.SpecialFolder.ApplicationData => C:\Users\jsarley\AppData\Roaming
-    // Environment.SpecialFolder.LocalApplicationData => C:\Users\jsarley\AppData\Local
-
-    internal static string LocalApplicationDataPath => Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-    internal static string JmsDataPath => Path.Combine(LocalApplicationDataPath, "JMS");
-    internal static string DataPath => Path.Combine(JmsDataPath, "DatabaseUtility");
-    internal static string LogFile => Path.Combine(DataPath, "Logs", "daily_.log");
-    
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -30,7 +23,7 @@ public partial class App : Application
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = Locator.Current.GetService<IViewFactory>()!.CreateView(ViewTypes.Main),
             };
         }
 

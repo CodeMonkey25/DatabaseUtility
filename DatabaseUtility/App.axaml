@@ -1,20 +1,37 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
-             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              x:Class="DatabaseUtility.App"
              xmlns:local="using:DatabaseUtility"
-             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+             RequestedThemeVariant="Light">
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
-  
+
     <Application.Styles>
-        <themes:MaterialTheme BaseTheme="Dark" PrimaryColor="Purple" SecondaryColor="Lime" />
-        <dialogHostAvalonia:DialogHostStyles />
-        <avalonia:MaterialIconStyles />
+        <FluentTheme />
+        <StyleInclude Source="Styles/DefaultStyles.axaml" />
+        <StyleInclude Source="/Views/IconButtonLabel.axaml" />
     </Application.Styles>
+
+    <Application.Resources>
+        <!-- https://phosphoricons.com -->
+        <FontFamily x:Key="Phosphor">/Assets/Fonts/Phosphor.ttf#Phosphor</FontFamily>
+        <FontFamily x:Key="PhosphorFill">/Assets/Fonts/Phosphor-Fill.ttf#Phosphor-Fill</FontFamily>
+        <FontFamily x:Key="Nunito">/Assets/Fonts#Nunito</FontFamily>
+        
+        <SolidColorBrush x:Key="PrimaryForeground">WhiteSmoke</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryBackground">MidnightBlue</SolidColorBrush>
+        <LinearGradientBrush x:Key="PrimaryBackgroundGradient" StartPoint="0%, 0%" EndPoint="100%, 0%">
+            <GradientStop Offset="0" Color="MidnightBlue"></GradientStop>
+            <GradientStop Offset="1" Color="DarkSlateBlue"></GradientStop>
+        </LinearGradientBrush>
+        
+        <SolidColorBrush x:Key="PrimaryHoverForeground">White</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryHoverBackground">#333B5A</SolidColorBrush>
+        
+        <SolidColorBrush x:Key="PrimaryDisabledForeground">MidnightBlue</SolidColorBrush>
+        <SolidColorBrush x:Key="PrimaryDisabledBackground">DarkOrange</SolidColorBrush>
+    </Application.Resources>
 </Application>

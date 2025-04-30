@@ -1,0 +1,54 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:DatabaseUtility.Views">
+    <Design.PreviewWith>
+        <Border Padding="20" Background="{DynamicResource PrimaryBackgroundGradient}">
+            <StackPanel Spacing="12">
+                <views:IconButtonLabel LabelText="Home" IconUnicode="&#xE2C2;" />
+                <Button>Hello World</Button>
+                <Button IsEnabled="False">Hello World</Button>
+                <CheckBox>Show Only RM12 Databases</CheckBox>
+                <CheckBox IsEnabled="False">Show Only RM12 Databases</CheckBox>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- <Style Selector=":is(TopLevel)"> -->
+    <!--     <Setter Property="FontFamily" Value="{DynamicResource Nunito}"/> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}" /> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource PrimaryBackground}" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- <Style Selector=":is(TemplatedControl) /template/ ContentPresenter"> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource PrimaryForeground}" /> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource PrimaryBackground}" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- ~1~ This doesn't work... @1@ -->
+    <!-- <Style Selector="CheckBox /template/ Border#NormalRectangle"> -->
+    <!--     <Setter Property="BorderBrush" Value="White" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- <Style Selector=":is(TemplatedControl):disabled /template/ ContentPresenter"> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource PrimaryDisabledForeground}" /> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource PrimaryDisabledBackground}" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- <Style Selector=":is(Button):pointerover /template/ ContentPresenter"> -->
+    <!--     <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverForeground}" /> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource PrimaryHoverBackground}" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- <Style Selector="views|IconButtonLabel > Button"> -->
+    <!--     <Setter Property="FontSize" Value="20"></Setter> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- ~1~ This doesn't work... @1@ -->
+    <!-- <Style Selector="TextBox:focus-within /template/ ContentPresenter"> -->
+    <!--     <Setter Property="Foreground" Value="Black" /> -->
+    <!-- </Style> -->
+    <!-- -->
+    <!-- <Style Selector="Border.menu"> -->
+    <!--     <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundGradient}" /> -->
+    <!-- </Style> -->
+</Styles>

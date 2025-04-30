@@ -2,13 +2,15 @@
 using Avalonia.ReactiveUI;
 using System;
 using DatabaseUtility.Services;
+using DatabaseUtility.Utility;
+using DatabaseUtility.ViewModels;
 using Serilog;
 using Splat;
 using Splat.Serilog;
 
 namespace DatabaseUtility;
 
-class Program
+internal static class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -18,7 +20,7 @@ class Program
     {
         SetUpLogging();
         RegisterDependencies();
-        
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 
@@ -29,13 +31,13 @@ class Program
             .WithInterFont()
             .LogToTrace()
             .UseReactiveUI();
-
+    
     private static void SetUpLogging()
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()
-            .WriteTo.File(App.LogFile, rollingInterval: RollingInterval.Day)
+            .WriteTo.File(Constants.LogFile, rollingInterval: RollingInterval.Month)
             .CreateLogger();
 
         Locator.CurrentMutable.UseSerilogFullLogger();
@@ -43,6 +45,14 @@ class Program
 
     private static void RegisterDependencies()
     {
-        Locator.CurrentMutable.Register<IDatabaseService>(() => new FileDatabaseService());
+        SplatRegistrations.Register<IViewFactory, ViewFactory>();
+        SplatRegistrations.Register<ILoggerService, LoggerService>();
+        SplatRegistrations.Register<ISettingsService, FileSettingsService>();
+        SplatRegistrations.Register<MainWindowViewModel>();
+        SplatRegistrations.Register<SettingsViewModel>();
+        SplatRegistrations.Register<DataInfoViewModel>();
+        SplatRegistrations.Register<ServersViewModel>();
+        
+        SplatRegistrations.SetupIOC();
     }
 }
