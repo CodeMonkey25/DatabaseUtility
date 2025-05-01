@@ -11,13 +11,14 @@ public class DataInfoViewModelShould
     public void FetchSettingsUponStartup()
     {
         // Arrange
+        Mock<ILoggerService> loggerServiceMock = new();
         Mock<ISettingsService> settingsServiceMock = new();
         settingsServiceMock.Setup(mock => mock.Get()).Returns(new Settings());
         Mock<IDatabaseService> databaseServiceMock = new();
-        Mock<ILoggerService> loggerServiceMock = new();
+        Mock<IDataInfoFileService> dataInfoFileServiceMock = new();
 
         // Act
-        DataInfoViewModel sut = new(settingsServiceMock.Object, databaseServiceMock.Object, loggerServiceMock.Object);
+        DataInfoViewModel _ = new(loggerServiceMock.Object, settingsServiceMock.Object, databaseServiceMock.Object, dataInfoFileServiceMock.Object);
         
         // Assert
         settingsServiceMock.Verify(mock => mock.Get(), Times.Once);

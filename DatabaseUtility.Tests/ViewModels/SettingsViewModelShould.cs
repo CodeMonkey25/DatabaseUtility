@@ -15,7 +15,7 @@ public class SettingsViewModelShould
         settingsServiceMock.Setup(mock => mock.Get()).Returns(new Settings());
 
         // Act
-        SettingsViewModel sut = new(settingsServiceMock.Object);
+        SettingsViewModel _ = new(settingsServiceMock.Object);
         
         // Assert
         settingsServiceMock.Verify(mock => mock.Get(), Times.Once);

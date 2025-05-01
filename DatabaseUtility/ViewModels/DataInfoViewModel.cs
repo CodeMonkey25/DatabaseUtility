@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using DatabaseUtility.Models;
@@ -17,8 +16,9 @@ public partial class DataInfoViewModel : ViewModelBase
 {
     public override ViewTypes ViewType => ViewTypes.DataInfo;
 
-    private readonly IDatabaseService? _databaseService;
     private readonly ILoggerService? _loggerService;
+    private readonly IDatabaseService? _databaseService;
+    private readonly IDataInfoFileService? _dataInfoFileService;
     private readonly IObservable<bool>? _canUpdateDataInfoExecute;
     
     [Reactive] private string _dataInfoFilePath = @"C:\Users\jsarley\source\repos\rm\UI\Desktop\WPFClient\bin\Debug\datainfo.dat";
@@ -30,11 +30,13 @@ public partial class DataInfoViewModel : ViewModelBase
     public DataInfoViewModel() { /* constructor for axaml designer */ }
     
     [DependencyInjectionConstructor]
-    public DataInfoViewModel(ISettingsService? settingsService, IDatabaseService? databaseService, ILoggerService? loggerService)
+    public DataInfoViewModel(ILoggerService? loggerService, ISettingsService? settingsService, IDatabaseService? databaseService, IDataInfoFileService? dataInfoFileService)
     {
+        _loggerService = loggerService ?? throw new Exception("logger service is required");
         ISettingsService settingsService1 = settingsService ?? throw new Exception("settings service is required");
         _databaseService = databaseService ?? throw new Exception("database service is required");
-        _loggerService = loggerService ?? throw new Exception("logger service is required");
+        _dataInfoFileService = dataInfoFileService ?? throw new Exception("datainfo file service is required");
+        
         Settings settings = settingsService1.Get();
         _databaseServers.Clear();
         _databaseServers.Add(settings.DatabaseServers);
@@ -51,21 +53,7 @@ public partial class DataInfoViewModel : ViewModelBase
     {
         try
         {
-            string server = string.Empty;
-            string db = string.Empty;
-            
-            // load from file
-            foreach (string line in File.ReadLines(DataInfoFilePath))
-            {
-                if (line.StartsWith("database="))
-                {
-                    db = line.Split("=")[1].Trim();
-                }
-                else if (line.StartsWith("server="))
-                {
-                    server = line.Split("=")[1].Trim();
-                }
-            }
+            (string server, string db) = _dataInfoFileService!.GetDataInfo(DataInfoFilePath);
             
             // validate data loaded
             if (string.IsNullOrEmpty(server)) throw new Exception("Unable to locate server record.");
@@ -99,7 +87,6 @@ public partial class DataInfoViewModel : ViewModelBase
         }
     }
 
-    
     [ReactiveCommand(CanExecute = nameof(_canUpdateDataInfoExecute))]
     private void UpdateDataInfo()
     {
@@ -108,20 +95,7 @@ public partial class DataInfoViewModel : ViewModelBase
 
         try
         {
-            string[] lines = File.ReadAllLines(DataInfoFilePath);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                if (lines[i].StartsWith("database="))
-                {
-                    lines[i] = $"database={SelectedDatabaseName[..^5]}";
-                }
-                else if (lines[i].StartsWith("server="))
-                {
-                    lines[i] = $"server={SelectedDatabaseServer}";
-                }
-            }
-
-            File.WriteAllLines(DataInfoFilePath, lines);
+            _dataInfoFileService!.SaveDataInfo(DataInfoFilePath, SelectedDatabaseServer, SelectedDatabaseName);
         }
         catch (Exception e)
         {

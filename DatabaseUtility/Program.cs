@@ -49,6 +49,7 @@ internal static class Program
         SplatRegistrations.Register<ILoggerService, LoggerService>();
         SplatRegistrations.Register<ISettingsService, FileSettingsService>();
         SplatRegistrations.Register<IDatabaseService, DatabaseService>();
+        SplatRegistrations.Register<IDataInfoFileService, DataInfoFileService>();
         SplatRegistrations.Register<MainWindowViewModel>();
         SplatRegistrations.Register<SettingsViewModel>();
         SplatRegistrations.Register<DataInfoViewModel>();

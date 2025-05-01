@@ -1,4 +1,5 @@
-﻿using DatabaseUtility.Services;
+﻿using DatabaseUtility.Models;
+using DatabaseUtility.Services;
 using DatabaseUtility.Utility;
 using DatabaseUtility.ViewModels;
 using Moq;
@@ -28,6 +29,7 @@ public class MainWindowViewModelShould
     {
         // Arrange
         Mock<ISettingsService> settingsServiceMock = new();
+        settingsServiceMock.Setup(mock => mock.Get()).Returns(new Settings());
         Mock<IViewFactory> viewFactoryMock = new();
         viewFactoryMock.Setup(mock => mock.CreateView(ViewTypes.DataInfo)).Returns(new DataInfoViewModel());
         viewFactoryMock.Setup(mock => mock.CreateView(ViewTypes.Settings)).Returns(new SettingsViewModel(settingsServiceMock.Object));
