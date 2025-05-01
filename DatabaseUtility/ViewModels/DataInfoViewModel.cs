@@ -14,6 +14,7 @@ namespace DatabaseUtility.ViewModels;
 
 public partial class DataInfoViewModel : ViewModelBase
 {
+    public const string DefaultDataInfoFilePath = @"C:\Users\jsarley\source\repos\rm\UI\Desktop\WPFClient\bin\Debug\datainfo.dat";
     public override ViewTypes ViewType => ViewTypes.DataInfo;
 
     private readonly ILoggerService? _loggerService;
@@ -21,7 +22,7 @@ public partial class DataInfoViewModel : ViewModelBase
     private readonly IDataInfoFileService? _dataInfoFileService;
     private readonly IObservable<bool>? _canUpdateDataInfoExecute;
     
-    [Reactive] private string _dataInfoFilePath = @"C:\Users\jsarley\source\repos\rm\UI\Desktop\WPFClient\bin\Debug\datainfo.dat";
+    [Reactive] private string _dataInfoFilePath = DefaultDataInfoFilePath;
     [Reactive] private ObservableCollection<string> _databaseServers = [];
     [Reactive] private ObservableCollection<string> _databaseNames = [];
     [Reactive] private string? _selectedDatabaseServer;
