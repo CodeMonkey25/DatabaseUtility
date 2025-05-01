@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using Dapper;
 using DatabaseUtility.Models;
 using DatabaseUtility.Services;
 using DatabaseUtility.Utility;
 using DynamicData;
-using MySqlConnector;
 using ReactiveUI;
 using ReactiveUI.SourceGenerators;
 using Splat;
@@ -20,8 +16,9 @@ namespace DatabaseUtility.ViewModels;
 public partial class DataInfoViewModel : ViewModelBase
 {
     public override ViewTypes ViewType => ViewTypes.DataInfo;
-    
-    private readonly ISettingsService? _settingsService;
+
+    private readonly IDatabaseService? _databaseService;
+    private readonly ILoggerService? _loggerService;
     private readonly IObservable<bool>? _canUpdateDataInfoExecute;
     
     [Reactive] private string _dataInfoFilePath = @"C:\Users\jsarley\source\repos\rm\UI\Desktop\WPFClient\bin\Debug\datainfo.dat";
@@ -33,10 +30,12 @@ public partial class DataInfoViewModel : ViewModelBase
     public DataInfoViewModel() { /* constructor for axaml designer */ }
     
     [DependencyInjectionConstructor]
-    public DataInfoViewModel(ISettingsService? settingsService)
+    public DataInfoViewModel(ISettingsService? settingsService, IDatabaseService? databaseService, ILoggerService? loggerService)
     {
-        _settingsService = settingsService ?? throw new Exception("settings service is required");
-        Settings settings = _settingsService.Get();
+        ISettingsService settingsService1 = settingsService ?? throw new Exception("settings service is required");
+        _databaseService = databaseService ?? throw new Exception("database service is required");
+        _loggerService = loggerService ?? throw new Exception("logger service is required");
+        Settings settings = settingsService1.Get();
         _databaseServers.Clear();
         _databaseServers.Add(settings.DatabaseServers);
 
@@ -80,7 +79,7 @@ public partial class DataInfoViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-            this.Log().Error(e, "Unable to load datainfo file");
+            _loggerService?.LogError(e, "Unable to load datainfo file");
         }
     }
     
@@ -90,47 +89,13 @@ public partial class DataInfoViewModel : ViewModelBase
         SelectedDatabaseName = null;
         if (serverName == null) { return; }
         
-        Settings settings = _settingsService!.Get();
-        string databaseNameFilter = settings.DatabaseNameFilter;
-        bool showOnlyRM12Databases = settings.ShowOnlyRM12Databases;
-        bool showOnlyDefaultLocations = settings.ShowOnlyDefaultLocations;
-        
         try
         {
-            IEnumerable<string> databases = Enumerable.Empty<string>();
-            MySqlConnectionStringBuilder builder = new()
-            {
-                Server = serverName,
-                Port = 3306,
-                UserID = "root",
-                Password = "1010as",
-            };
-            using (IDbConnection conn = new MySqlConnection(builder.ToString()))
-            {
-                conn.Open();
-                const string sql = "SELECT SCHEMA_NAME FROM information_schema.schemata WHERE `SCHEMA_NAME` NOT IN ('information_schema', 'mysql', 'performance_schema', 'sys') ORDER BY `SCHEMA_NAME`";
-                databases = conn.Query<string>(sql);
-            }
-
-            if (!string.IsNullOrEmpty(databaseNameFilter))
-            {
-                databases = databases.Where(name => name.Contains(databaseNameFilter, StringComparison.CurrentCultureIgnoreCase));
-            }
-
-            if (showOnlyRM12Databases)
-            {
-                databases = databases.Where(name => name.EndsWith("_rm12", StringComparison.CurrentCultureIgnoreCase));
-                if (showOnlyDefaultLocations)
-                {
-                    databases = databases.Where(name => name.Count(c => c == '_') == 1);
-                }
-            }
-
-            DatabaseNames.AddRange(databases);
+            DatabaseNames.AddRange(_databaseService!.GetDatabaseNames(serverName));
         }
         catch (Exception e)
         {
-            this.Log().Error(e, "Unable to load database names");
+            _loggerService?.LogError(e, "Unable to load database names");
         }
     }
 
@@ -160,7 +125,7 @@ public partial class DataInfoViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-            this.Log().Error(e, "Unable to update datainfo file");
+            _loggerService?.LogError(e, "Unable to update datainfo file");
         }
     }
 }

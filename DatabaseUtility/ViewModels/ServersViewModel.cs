@@ -25,7 +25,7 @@ public partial class ServersViewModel : ViewModelBase
     
     [Reactive] private ObservableCollectionExtended<string> _databaseServers = [];
     [Reactive] private string _databaseServer = string.Empty;
-    [Reactive] private string? _selectedDatabaseServer = null;
+    [Reactive] private string? _selectedDatabaseServer;
     [Reactive] private int _selectedDatabaseServerIndex = -1;
 
     public ServersViewModel() { /* constructor for axaml designer */ }
