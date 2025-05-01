@@ -22,8 +22,8 @@ public class DatabaseService(ISettingsService? settingsService) : IDatabaseServi
         {
             Server = server,
             Port = 3306,
-            UserID = "root",
-            Password = "1010as",
+            UserID = settings.DatabaseUser,
+            Password = settings.DatabasePassword,
         };
         using (IDbConnection conn = new MySqlConnection(builder.ToString()))
         {

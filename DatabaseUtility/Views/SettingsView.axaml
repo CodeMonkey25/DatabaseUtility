@@ -14,21 +14,27 @@
     </Design.DataContext>
     
     <Border Padding="20">
-        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Database Name Filter:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding DatabaseNameFilter}" />
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="Auto,*,Auto,Auto">
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Database User:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding DatabaseUser}" Margin="5" />
             
-            <CheckBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyRM12Databases}">
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Database Password:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding DatabasePassword}" Margin="5" />
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Database Name Filter:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding DatabaseNameFilter}" Margin="5" />
+            
+            <CheckBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyRM12Databases}">
                 Show Only RM12 Databases
             </CheckBox>
             
-            <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyDefaultLocations}">
+            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowOnlyDefaultLocations}">
                 Show Only Default Locations
             </CheckBox>
             
-            <Button Grid.Row="4" Grid.Column="2" Command="{Binding CancelCommand}">Cancel</Button>
+            <Button Grid.Row="6" Grid.Column="2" Command="{Binding CancelCommand}">Cancel</Button>
 
-            <Button Grid.Row="4" Grid.Column="3" Command="{Binding SaveCommand}">Save</Button>
+            <Button Grid.Row="6" Grid.Column="3" Command="{Binding SaveCommand}">Save</Button>
         </Grid>
     </Border>
 </reactiveUi:ReactiveUserControl>

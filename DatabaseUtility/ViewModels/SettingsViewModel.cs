@@ -18,6 +18,8 @@ public partial class SettingsViewModel : ViewModelBase
     [Reactive] private bool _showOnlyRM12Databases;
     [Reactive] private bool _showOnlyDefaultLocations;
     [Reactive] private string _databaseNameFilter = string.Empty;
+    [Reactive] private string _databaseUser = string.Empty;
+    [Reactive] private string _databasePassword = string.Empty;
 
     public SettingsViewModel() { /* constructor for axaml designer */ }
     
@@ -31,10 +33,15 @@ public partial class SettingsViewModel : ViewModelBase
             vm => vm.ShowOnlyRM12Databases,
             vm => vm.ShowOnlyDefaultLocations,
             vm => vm.DatabaseNameFilter,
-            (showOnlyRM12Databases, showOnlyDefaultLocations, databaseNameFilter) =>
+            vm => vm.DatabaseUser,
+            vm => vm.DatabasePassword,
+            (showOnlyRM12Databases, showOnlyDefaultLocations, databaseNameFilter, databaseUser, databasePassword) =>
                 showOnlyRM12Databases != _settings.ShowOnlyRM12Databases
                 || showOnlyDefaultLocations != _settings.ShowOnlyDefaultLocations
-                || databaseNameFilter != _settings.DatabaseNameFilter);
+                || databaseNameFilter != _settings.DatabaseNameFilter
+                || databaseUser != _settings.DatabaseUser
+                || databasePassword != _settings.DatabasePassword
+            );
 
         Cancel();
     }
@@ -45,6 +52,8 @@ public partial class SettingsViewModel : ViewModelBase
         _settings.ShowOnlyRM12Databases = ShowOnlyRM12Databases;
         _settings.ShowOnlyDefaultLocations = ShowOnlyDefaultLocations;
         _settings.DatabaseNameFilter = DatabaseNameFilter;
+        _settings.DatabaseUser = DatabaseUser;
+        _settings.DatabasePassword = DatabasePassword;
         _settingsService?.Save(_settings);
     }
     
@@ -54,5 +63,7 @@ public partial class SettingsViewModel : ViewModelBase
         ShowOnlyRM12Databases = _settings.ShowOnlyRM12Databases;
         ShowOnlyDefaultLocations = _settings.ShowOnlyDefaultLocations;
         DatabaseNameFilter = _settings.DatabaseNameFilter;
+        DatabaseUser = _settings.DatabaseUser;
+        DatabasePassword = _settings.DatabasePassword;
     }
 }
