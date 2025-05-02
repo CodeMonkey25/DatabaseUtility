@@ -11,7 +11,7 @@ namespace DatabaseUtility.ViewModels;
 public partial class SettingsViewModel : ViewModelBase
 {
     private readonly ISettingsService? _settingsService;
-    private IObservable<bool>? _isDirty;
+    private readonly IObservable<bool>? _isDirty;
     private readonly Settings _settings = new();
     public override ViewTypes ViewType => ViewTypes.Settings;
 

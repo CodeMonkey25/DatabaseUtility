@@ -89,7 +89,7 @@ public partial class DataInfoViewModel : ViewModelBase
     }
 
     [ReactiveCommand(CanExecute = nameof(_canUpdateDataInfoExecute))]
-    private void UpdateDataInfo()
+    internal void UpdateDataInfo()
     {
         if (SelectedDatabaseServer == null) return;
         if (SelectedDatabaseName == null) return;

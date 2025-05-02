@@ -45,19 +45,19 @@ public partial class ServersViewModel : ViewModelBase
     }
 
     [ReactiveCommand(CanExecute = nameof(_canAddServer))]
-    private void AddServer()
+    internal void AddServer()
     {
         DatabaseServers.Add(DatabaseServer);
     }
 
     [ReactiveCommand(CanExecute = nameof(_isServerSelected))]
-    private void RemoveServer()
+    internal void RemoveServer()
     {
-        DatabaseServers.Remove(SelectedDatabaseServer!);
+        DatabaseServers.RemoveAt(SelectedDatabaseServerIndex);
     }
 
     [ReactiveCommand(CanExecute = nameof(_isServerSelected))]
-    private void MoveServerUp()
+    internal void MoveServerUp()
     {
         int i = SelectedDatabaseServerIndex;
         if (i == 0) return;
@@ -66,7 +66,7 @@ public partial class ServersViewModel : ViewModelBase
     }
 
     [ReactiveCommand(CanExecute = nameof(_isServerSelected))]
-    private void MoveServerDown()
+    internal void MoveServerDown()
     {
         int i = SelectedDatabaseServerIndex;
         if (i == DatabaseServers.Count - 1) return;
@@ -75,7 +75,7 @@ public partial class ServersViewModel : ViewModelBase
     }
     
     [ReactiveCommand(CanExecute = nameof(_isDirty))]
-    private void Save()
+    internal void Save()
     {
         _settings.DatabaseServers = _databaseServers.ToList();
         _settingsService?.Save(_settings);
@@ -83,7 +83,7 @@ public partial class ServersViewModel : ViewModelBase
     }
     
     [ReactiveCommand(CanExecute = nameof(_isDirty))]
-    private void Cancel()
+    internal void Cancel()
     {
         _databaseServers.Clear();
         _databaseServers.Add(_settings.DatabaseServers);
