@@ -25,7 +25,6 @@ public partial class ServersViewModel : ViewModelBase
     
     [Reactive] private ObservableCollectionExtended<string> _databaseServers = [];
     [Reactive] private string _databaseServer = string.Empty;
-    [Reactive] private string? _selectedDatabaseServer;
     [Reactive] private int _selectedDatabaseServerIndex = -1;
 
     public ServersViewModel() { /* constructor for axaml designer */ }
@@ -40,7 +39,7 @@ public partial class ServersViewModel : ViewModelBase
             .FromEventPattern<NotifyCollectionChangedEventArgs>(DatabaseServers, "CollectionChanged")
             .Select(_ => AreCollectionsDifferent(DatabaseServers, _settings.DatabaseServers));
         _canAddServer = this.WhenAnyValue(vm => vm.DatabaseServer, server => !string.IsNullOrWhiteSpace(server));
-        _isServerSelected = this.WhenAnyValue(vm => vm.SelectedDatabaseServer, server => !string.IsNullOrWhiteSpace(server));
+        _isServerSelected = this.WhenAnyValue(vm => vm.SelectedDatabaseServerIndex, index => index >= 0);
         Cancel();
     }
 
@@ -77,7 +76,7 @@ public partial class ServersViewModel : ViewModelBase
     [ReactiveCommand(CanExecute = nameof(_isDirty))]
     internal void Save()
     {
-        _settings.DatabaseServers = _databaseServers.ToList();
+        _settings.DatabaseServers = DatabaseServers.ToList();
         _settingsService?.Save(_settings);
         Cancel();
     }
@@ -85,8 +84,8 @@ public partial class ServersViewModel : ViewModelBase
     [ReactiveCommand(CanExecute = nameof(_isDirty))]
     internal void Cancel()
     {
-        _databaseServers.Clear();
-        _databaseServers.Add(_settings.DatabaseServers);
+        DatabaseServers.Clear();
+        DatabaseServers.Add(_settings.DatabaseServers);
     }
 
     private bool AreCollectionsDifferent(IList<string> first, IList<string> second)
