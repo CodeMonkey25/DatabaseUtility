@@ -26,7 +26,20 @@ public class DataInfoFileService : IDataInfoFileService
 
     public void SaveDataInfo(string filePath, string server, string db)
     {
-        string[] lines = File.ReadAllLines(filePath);
+        string[] lines = [
+            @"datapath=C:\ProgramData\LCS\Rent Manager 12",
+            @"server=rm-db01.rentmanager.dev",
+            @"database=jsarleythgprop",
+            @"dbuserid=devuser",
+            @"dbpassword=vjxFoIg/onkPIJNlzzYRvw==S2J54V2VN0gghO7bVgoCnQ==",
+            @"softwareversion=12",
+            @"port=3306",
+        ];
+        if (File.Exists(filePath))
+        {
+            lines = File.ReadAllLines(filePath);
+        }
+
         for (int i = 0; i < lines.Length; i++)
         {
             if (lines[i].StartsWith("database="))
