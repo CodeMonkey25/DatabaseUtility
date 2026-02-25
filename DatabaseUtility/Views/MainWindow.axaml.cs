@@ -1,5 +1,5 @@
-using Avalonia.ReactiveUI;
 using DatabaseUtility.ViewModels;
+using ReactiveUI.Avalonia;
 
 namespace DatabaseUtility.Views;
 

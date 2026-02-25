@@ -1,9 +1,9 @@
 ﻿using Avalonia;
-using Avalonia.ReactiveUI;
 using System;
 using DatabaseUtility.Services;
 using DatabaseUtility.Utility;
 using DatabaseUtility.ViewModels;
+using ReactiveUI.Avalonia;
 using Serilog;
 using Splat;
 using Splat.Serilog;
@@ -30,7 +30,7 @@ internal static class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace()
-            .UseReactiveUI();
+            .UseReactiveUI(rxAppBuilder => { });
     
     private static void SetUpLogging()
     {
