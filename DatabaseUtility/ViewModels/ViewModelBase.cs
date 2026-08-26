@@ -1,7 +1,8 @@
 ﻿using System.Reactive.Disposables;
-using System.Reactive.Disposables.Fluent;
 using DatabaseUtility.Utility;
 using ReactiveUI;
+using ReactiveUI.Primitives;
+using ReactiveUI.Primitives.Disposables;
 
 namespace DatabaseUtility.ViewModels;
 
@@ -20,6 +21,6 @@ public abstract class ViewModelBase : ReactiveObject, IActivatableViewModel
         });
     }
 
-    protected virtual void HandleActivation(CompositeDisposable disposables) { }
+    protected virtual void HandleActivation(MultipleDisposable disposables) { }
     protected virtual void HandleDeactivation() { }
 }

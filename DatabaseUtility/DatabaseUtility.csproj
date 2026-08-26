@@ -21,20 +21,22 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
         <PackageReference Include="Dapper" Version="2.1.79" />
+        <PackageReference Include="DynamicData" Version="9.4.33" />
         <PackageReference Include="MySqlConnector" Version="2.6.2" />
-        <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.3" />
-        <PackageReference Include="ReactiveUI.SourceGenerators" Version="3.1.0">
+        <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.1" />
+        <PackageReference Include="ReactiveUI.SourceGenerators" Version="3.2.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Serilog" Version="4.4.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-        <PackageReference Include="Splat" Version="19.4.1" />
+        <PackageReference Include="Splat" Version="21.0.0" />
         <PackageReference Include="Splat.DependencyInjection.SourceGenerator" Version="2.3.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Splat.Serilog" Version="19.4.1" />
+        <PackageReference Include="Splat.Serilog" Version="21.0.0" />
+        <PackageReference Include="System.Reactive" Version="7.0.0" />
     </ItemGroup>
 </Project>
